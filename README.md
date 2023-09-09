@@ -4,11 +4,10 @@ This project provides Docker configurations for creating MongoDB replicas.
 
 ### Running with Docker
 
-Before running the containers, create the **.env** file and set the following environment variables:
+If you wish to initialize specific databases during startup, you can create a **.env** file and set the **MONGO_INITDB_DATABASE** environment variable in that file. Here's an example of how to do it:
 
 ```bash
-APP_NAME= # The name of the application
-MONGO_INITDB_DATABASE= # Databases initialized during MongoDB startup
+MONGO_INITDB_DATABASE=DB1,DB2,DB3 # Databases initialized during MongoDB startup
 ```
 
 To run the application with _Docker Compose_, use the following commands:
