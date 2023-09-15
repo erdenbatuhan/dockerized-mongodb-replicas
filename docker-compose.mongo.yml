@@ -1,34 +1,33 @@
 # Docker Compose Configuration (MongoDB Replicas)
 
 version: "3"
-name: ${MONGO_APP_NAME}
 networks:
   isolated-network-mongo:
-    name: ${MONGO_APP_NAME}-isolated-network-mongo
 volumes:
   volume-mongo1.db:
-    name: ${MONGO_APP_NAME}-volume-${MONGO_REPL_1}.db
   volume-mongo2.db:
-    name: ${MONGO_APP_NAME}-volume-${MONGO_REPL_2}.db
   volume-mongo3.db:
-    name: ${MONGO_APP_NAME}-volume-${MONGO_REPL_3}.db
 services:
   # Replica Manager
   mongo-manager:
     container_name: ${MONGO_REPL_MANAGER}
     image: mongo:latest
+    working_dir: /app
     entrypoint:
-      - /app/init-replica-set.sh
+      - ./init-replica-set.sh
     networks:
       - isolated-network-mongo
     volumes:
-      - ./init-replica-set.sh:/app/init-replica-set.sh
+      - ./init-scripts:/app
     env_file:
       - ./mongo.properties
     depends_on:
-      - mongo1
-      - mongo2
-      - mongo3
+      mongo1:
+        condition: service_healthy
+      mongo2:
+        condition: service_healthy
+      mongo3:
+        condition: service_healthy
   # Replica 1
   mongo1:
     container_name: ${MONGO_REPL_1}
@@ -43,6 +42,11 @@ services:
       - 27300:${MONGO_PORT} # Remove later; it should only be accessible through isolated-network-mongo!
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
   # Replica 2
   mongo2:
     container_name: ${MONGO_REPL_2}
@@ -57,6 +61,11 @@ services:
       - 27301:${MONGO_PORT} # Remove later; it should only be accessible through isolated-network-mongo!
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
   # Replica 3
   mongo3:
     container_name: ${MONGO_REPL_3}
@@ -71,3 +80,8 @@ services:
       - 27302:${MONGO_PORT} # Remove later; it should only be accessible through isolated-network-mongo!
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
