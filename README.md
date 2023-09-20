@@ -68,7 +68,7 @@ You can use these configurations with another project by executing them alongsid
 Suppose you have this project located in a separate folder called "mongo" within another project. Please note that the order of execution is important. Run the MongoDB Docker Compose configurations first. Here's an example:
 
 ```bash
-docker-compose \
+docker compose \
     --env-file mongo/mongo.properties --env-file mongo/.env -f mongo/docker-compose.mongo.yml \
     --env-file application.properties --env-file .env -f docker-compose.yml [build|up|down|...]
 ```

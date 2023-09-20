@@ -18,7 +18,7 @@ services:
     networks:
       isolated-network-mongo: # Isolated Network for MongoDB
     volumes:
-      - ${MONGO_DIR_INIT_SCRIPTS}:/app
+      - ${MONGO_DIR}/init-scripts:/app
     env_file:
       - ${MONGO_DIR}/mongo.properties
     depends_on:
