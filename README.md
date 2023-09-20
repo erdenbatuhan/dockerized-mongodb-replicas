@@ -24,7 +24,7 @@ MONGO_INITDB_DATABASE=DB1,DB2,DB3 # Databases initialized during MongoDB startup
 To start Docker containers for the application, use the following command:
 
 ```bash
-make run ARGS=-d # Run the containers in background
+make start ARGS=-d # Run the containers in background
 ```
 
 This command also stops any existing containers related to this application before starting new ones.

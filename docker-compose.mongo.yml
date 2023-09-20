@@ -18,9 +18,9 @@ services:
     networks:
       isolated-network-mongo: # Isolated Network for MongoDB
     volumes:
-      - ./init-scripts:/app
+      - ${MONGO_DIR_INIT_SCRIPTS}:/app
     env_file:
-      - ./mongo.properties
+      - ${MONGO_DIR}/mongo.properties
     depends_on:
       mongo1:
         condition: service_healthy
