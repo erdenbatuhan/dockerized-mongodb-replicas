@@ -63,12 +63,21 @@ make clean_db
 
 ## Using it with another project
 
-You can use these configurations with another project by executing them alongside that project.
+You can use these configurations with another project by executing them alongside that project. Consider a scenario where your project is situated in a distinct folder named **mongo** within another project. 
 
-Suppose you have this project located in a separate folder called "mongo" within another project. Please note that the order of execution is important. Run the MongoDB Docker Compose configurations first. Here's an example:
+The following is an example that is executed from one directory above.
+
+**Important Points:**
+- It's vital to emphasize that the sequence of execution matters. The Docker Compose configuration file for MongoDB should be executed after the main project's file. This precaution is essential because, when working with multiple Compose files, it's imperative to confirm that all specified paths within these files are relative to the primary Compose file, which is the first one specified using the **-f** flag.
+- Please note that the _environment variables_ also override each other.
 
 ```bash
+MONGO_DIR=./mongo # To ensure that this environment variable takes precedence over the one defined in the project's environment variable files, please set it in the root directory of the main project.
+
 docker compose \
-    --env-file mongo/mongo.properties --env-file mongo/.env -f mongo/docker-compose.mongo.yml \
-    --env-file application.properties --env-file .env -f docker-compose.yml [build|up|down|...]
+  --env-file ${MONGO_DIR}/.env \
+  --env-file ./.env \
+  --env-file ${MONGO_DIR}/mongo.properties \
+  --env-file ./application.properties \
+  -f docker-compose.yml -f ${MONGO_DIR}/docker-compose.mongo.yml [build|up|down|...]
 ```
