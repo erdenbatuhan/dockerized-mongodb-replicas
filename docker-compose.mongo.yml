@@ -1,8 +1,6 @@
-# Docker Compose Configuration (MongoDB Replicas)
-
 version: "3"
 networks:
-  isolated-network-mongo: # Isolated network for MongoDB
+  isolated-network-mongo: # Isolated network exclusively for MongoDB
 volumes:
   volume-mongo1.db:
   volume-mongo2.db:
@@ -16,7 +14,7 @@ services:
     entrypoint:
       - ./init-replica-set.sh
     networks:
-      isolated-network-mongo: # Isolated network for MongoDB
+      isolated-network-mongo: # Isolated network exclusively for MongoDB
     volumes:
       - ${MONGO_DIR}/init-scripts:/app
     env_file:
@@ -35,11 +33,11 @@ services:
     command: --port ${MONGO_PORT} --bind_ip_all --replSet ${MONGO_REPL_ID}
     restart: unless-stopped
     networks:
-      isolated-network-mongo: # Isolated network for MongoDB
+      isolated-network-mongo: # Isolated network exclusively for MongoDB
     volumes:
       - volume-mongo1.db:/data/db
-    ports:
-      - 27300:${MONGO_PORT} # Remove later; it should only be accessible through isolated-network-mongo!
+#    ports:
+#      - 27300:${MONGO_PORT} # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     healthcheck:
@@ -54,11 +52,11 @@ services:
     command: --port ${MONGO_PORT} --bind_ip_all --replSet ${MONGO_REPL_ID}
     restart: unless-stopped
     networks:
-      isolated-network-mongo: # Isolated network for MongoDB
+      isolated-network-mongo: # Isolated network exclusively for MongoDB
     volumes:
       - volume-mongo2.db:/data/db
-    ports:
-      - 27301:${MONGO_PORT} # Remove later; it should only be accessible through isolated-network-mongo!
+#    ports:
+#      - 27301:${MONGO_PORT} # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     healthcheck:
@@ -73,11 +71,11 @@ services:
     command: --port ${MONGO_PORT} --bind_ip_all --replSet ${MONGO_REPL_ID}
     restart: unless-stopped
     networks:
-      isolated-network-mongo: # Isolated network for MongoDB
+      isolated-network-mongo: # Isolated network exclusively for MongoDB
     volumes:
       - volume-mongo3.db:/data/db
-    ports:
-      - 27302:${MONGO_PORT} # Remove later; it should only be accessible through isolated-network-mongo!
+#    ports:
+#      - 27302:${MONGO_PORT} # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     healthcheck:
