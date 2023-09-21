@@ -36,8 +36,8 @@ services:
       isolated-network-mongo: # Isolated network exclusively for MongoDB
     volumes:
       - volume-mongo1.db:/data/db
-#    ports:
-#      - 27300:${MONGO_PORT} # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
+#    ports: # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
+#      - 27300:${MONGO_PORT}
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     healthcheck:
@@ -55,8 +55,8 @@ services:
       isolated-network-mongo: # Isolated network exclusively for MongoDB
     volumes:
       - volume-mongo2.db:/data/db
-#    ports:
-#      - 27301:${MONGO_PORT} # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
+#    ports: # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
+#      - 27301:${MONGO_PORT}
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     healthcheck:
@@ -74,8 +74,8 @@ services:
       isolated-network-mongo: # Isolated network exclusively for MongoDB
     volumes:
       - volume-mongo3.db:/data/db
-#    ports:
-#      - 27302:${MONGO_PORT} # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
+#    ports: # Uncomment for testing purposes; under normal conditions, it should only be accessible through the isolated MongoDB network!
+#      - 27302:${MONGO_PORT}
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     healthcheck:
