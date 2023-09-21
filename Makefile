@@ -1,9 +1,9 @@
 include mongo.properties
 
-ENV_FILES=\
-	--env-file mongo.properties \
-	--env-file .env
-COMPOSE_FILE=-f docker-compose.mongo.yml
+ENV_FILES = --env-file mongo.properties
+ifneq ($(wildcard .env),) # If .env file exists
+	ENV_FILES += --env-file .env
+endif
 
 .PHONY: stop
 stop:
@@ -11,7 +11,7 @@ stop:
 
 .PHONY: start
 start: stop
-	docker compose --project-directory . -p $(MONGO_APP_NAME) $(ENV_FILES) $(COMPOSE_FILE) up --build $(ARGS)
+	docker compose --project-directory . -p $(MONGO_APP_NAME) $(ENV_FILES) -f docker-compose.mongo.yml up --build $(ARGS)
 
 .PHONY: clean_volumes
 clean_volumes: stop
