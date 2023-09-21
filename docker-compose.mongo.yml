@@ -2,7 +2,7 @@
 
 version: "3"
 networks:
-  isolated-network-mongo: # Isolated Network for MongoDB
+  isolated-network-mongo: # Isolated network for MongoDB
 volumes:
   volume-mongo1.db:
   volume-mongo2.db:
@@ -16,7 +16,7 @@ services:
     entrypoint:
       - ./init-replica-set.sh
     networks:
-      isolated-network-mongo: # Isolated Network for MongoDB
+      isolated-network-mongo: # Isolated network for MongoDB
     volumes:
       - ${MONGO_DIR}/init-scripts:/app
     env_file:
@@ -35,7 +35,7 @@ services:
     command: --port ${MONGO_PORT} --bind_ip_all --replSet ${MONGO_REPL_ID}
     restart: unless-stopped
     networks:
-      isolated-network-mongo: # Isolated Network for MongoDB
+      isolated-network-mongo: # Isolated network for MongoDB
     volumes:
       - volume-mongo1.db:/data/db
     ports:
@@ -54,7 +54,7 @@ services:
     command: --port ${MONGO_PORT} --bind_ip_all --replSet ${MONGO_REPL_ID}
     restart: unless-stopped
     networks:
-      isolated-network-mongo: # Isolated Network for MongoDB
+      isolated-network-mongo: # Isolated network for MongoDB
     volumes:
       - volume-mongo2.db:/data/db
     ports:
@@ -73,7 +73,7 @@ services:
     command: --port ${MONGO_PORT} --bind_ip_all --replSet ${MONGO_REPL_ID}
     restart: unless-stopped
     networks:
-      isolated-network-mongo: # Isolated Network for MongoDB
+      isolated-network-mongo: # Isolated network for MongoDB
     volumes:
       - volume-mongo3.db:/data/db
     ports:
