@@ -8,5 +8,4 @@ data/db/
 node_modules/
 
 # dotenv environment variable files
-.env
-.env.*.local
+.env*
