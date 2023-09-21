@@ -41,15 +41,11 @@ make stop
 
 To clean up Docker resources, including removing containers, images, and volumes, use the following command:
 
+This command will remove images, containers, volumes (e.g., dangling volumes such as dangling Docker volumes such as _0c18b ... 362cf_), networks, and orphaned containers.
+
 ```bash
 make clean
 ```
-
-This command will:
-
-- Stop any existing containers related to the application and remove them
-- Remove Docker images related to the application
-- Remove dangling Docker volumes, excluding those with names ending in ".db"
 
 ### Clean Up the DB
 

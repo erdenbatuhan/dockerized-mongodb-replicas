@@ -13,18 +13,19 @@ stop:
 start: stop
 	docker compose --project-directory . -p $(MONGO_APP_NAME) $(ENV_FILES) -f docker-compose.mongo.yml up --build $(ARGS)
 
-.PHONY: clean_volumes
-clean_volumes: stop
+.PHONY: clean_dangling_volumes
+clean_dangling_volumes: stop
 	docker volume ls -qf dangling=true | egrep '^[a-z0-9]{64}' | xargs docker volume rm
 
 .PHONY: clean
-clean: clean_volumes
-	docker compose -p $(MONGO_APP_NAME) ps -aq | xargs docker rm -f
-	docker images -a | awk '/$(MONGO_APP_NAME)/ { print $$3 }' | xargs docker rmi -f
+clean: clean_dangling_volumes
+#	docker compose -p $(MONGO_APP_NAME) ps -aq | xargs docker rm -f
+#	docker network ls --filter "name=$(MONGO_APP_NAME).*" -q | xargs docker network rm
+	docker images -q --filter "label=com.docker.compose.project=$(MONGO_APP_NAME)" | xargs docker rmi -f
 
 .PHONY: clean_db
-clean_db: clean_volumes
-	docker volume ls -q | grep "^$(MONGO_APP_NAME).*\.db" | xargs -I {} docker volume rm {}
+clean_db: clean_dangling_volumes
+	docker volume ls -q --filter "label=com.docker.compose.project=$(MONGO_APP_NAME)" | xargs docker volume rm
 
 ### ----------------------------------------------------------------------- ###
 ###  Caution: Use the following commands carefully!                         ###
