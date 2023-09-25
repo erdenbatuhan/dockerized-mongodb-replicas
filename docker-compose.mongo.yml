@@ -1,10 +1,4 @@
 version: "3"
-networks:
-  isolated-network-mongo: # Isolated network exclusively for MongoDB
-volumes:
-  volume-mongo1.db:
-  volume-mongo2.db:
-  volume-mongo3.db:
 services:
   # Replica Manager
   mongo-manager:
@@ -83,3 +77,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+networks:
+  isolated-network-mongo: # Isolated network exclusively for MongoDB
+volumes:
+  volume-mongo1.db:
+  volume-mongo2.db:
+  volume-mongo3.db:
