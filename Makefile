@@ -1,9 +1,6 @@
 include mongo.properties
 
-ENV_FILES = --env-file mongo.properties
-ifneq ($(wildcard .env),) # If .env file exists
-	ENV_FILES += --env-file .env
-endif
+ENV_FILES = --env-file mongo.properties $(if $(wildcard .env), --env-file .env)
 
 .PHONY: stop
 stop:
