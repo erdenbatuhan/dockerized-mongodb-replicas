@@ -17,7 +17,7 @@ clean_dangling_volumes: stop
 .PHONY: clean
 clean: clean_dangling_volumes
 	docker compose -p $(MONGO_APP_NAME) ps -aq | xargs docker rm -f
-	docker network ls -qf "name=$(MONGO_APP_NAME).*" -q | xargs docker network rm -f
+	docker network ls -qf "label=com.docker.compose.project=$(MONGO_APP_NAME)" | xargs docker network rm -f
 	docker images -qf "label=com.docker.compose.project=$(MONGO_APP_NAME)" | xargs docker rmi -f
 
 .PHONY: clean_db
