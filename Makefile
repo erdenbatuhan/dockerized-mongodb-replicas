@@ -4,7 +4,7 @@ ENV_FILES = --env-file mongo.properties $(if $(wildcard .env), --env-file .env)
 
 .PHONY: stop
 stop:
-	docker compose -p $(MONGO_APP_NAME) down
+	docker compose -p $(MONGO_APP_NAME) down || true
 
 .PHONY: start
 start: stop
