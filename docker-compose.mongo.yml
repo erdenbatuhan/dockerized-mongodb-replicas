@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   # Replica Manager
   mongo-manager:
@@ -20,6 +21,7 @@ services:
         condition: service_healthy
       mongo3:
         condition: service_healthy
+
   # Replica 1
   mongo1:
     container_name: ${MONGO_REPL_1}
@@ -39,6 +41,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
   # Replica 2
   mongo2:
     container_name: ${MONGO_REPL_2}
@@ -58,6 +61,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
   # Replica 3
   mongo3:
     container_name: ${MONGO_REPL_3}
@@ -77,8 +81,10 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
 networks:
   isolated-network-mongo: # Isolated network exclusively for MongoDB
+
 volumes:
   volume-mongo1.db:
   volume-mongo2.db:
